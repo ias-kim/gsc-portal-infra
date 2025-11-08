@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: sgwar/gsc-portal-frontend:latest
+    container_name: gsc_frontend
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "8080:80"                 # 호스트 Nginx가 80/443 쓰면 8080으로 내부 연결
+    networks:
+      - gsc
+    restart: always
+
+  backend:
+    image: sgwar/gsc-portal-backend:latest
+    container_name: gsc_backend
+    volumes:
+      - ./uploads:/app/uploads
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=${TIME_ZONE}
+      - NODE_ENV=production
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - db
+      - redis
+    networks:
+      - gsc
+    restart: always
+
+  db:
+    image: mysql:8
+    container_name: gsc_db
+    command:
+      - --character-set-server=ujtf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - TZ=${TIME_ZONE}
+    volumes:
+      - db_data:/var/lib/mysql      # EBS 바인드로 바꾸려면: /mnt/mysql-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./mysql/conf.d:/etc/mysql/conf.d
+    networks:
+      - gsc
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: gsc_redis
+    restart: always
+
+networks:
+  gsc:
+    driver: bridge
+
+volumes:
+  db_data:
