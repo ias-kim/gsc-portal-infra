@@ -6,8 +6,10 @@ services:
     container_name: gsc_frontend
     environment:
       - NODE_ENV=production
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_API_URL=http://dev_backend:3000
     ports:
-      - "8080:80"                 # 호스트 Nginx가 80/443 쓰면 8080으로 내부 연결
+      - "5173:5173"    # 호스트 Nginx가 80/443 쓰면 8080으로 내부 연결
     networks:
       - gsc
     restart: always
