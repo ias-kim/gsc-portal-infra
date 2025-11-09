@@ -9,7 +9,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - VITE_API_URL=http://dev_backend:3000
     ports:
-      - "5173:5173"    # 호스트 Nginx가 80/443 쓰면 8080으로 내부 연결
+      - "5173:5173"    # 호스트 Nginx가 80/443 쓰면 5173으로 내부 연결
     networks:
       - gsc
     restart: always
@@ -58,6 +58,8 @@ services:
       - db_data:/var/lib/mysql      # EBS 바인드로 바꾸려면: /mnt/mysql-data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
       - ./mysql/conf.d:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
     networks:
       - gsc
     restart: always
@@ -65,6 +67,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: gsc_redis
+    ports:
+      - "6379:6379"
     restart: always
 
 networks:
