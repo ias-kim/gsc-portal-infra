@@ -12,7 +12,7 @@ SELECT
          WHEN c.is_special = 2 THEN 'korean'
          WHEN c.is_special = 1 THEN 'special'
          ELSE 'regular'
-        END) COLLATE utf8mb4_0900_ai_ci AS course_type,
+        END) AS course_type,
     JSON_OBJECT(
             'user_id', u.user_id,
             'name', u.name,
