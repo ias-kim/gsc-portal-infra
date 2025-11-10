@@ -1,6 +1,4 @@
-ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+CREATE USER 'admin'@'%' IDENTIFIED WITH caching_sha2_password BY 'admin123';
 
 -- =========================================================
 -- GSC Portal Database Schema (fixed order & syntax)
