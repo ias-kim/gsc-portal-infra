@@ -2,6 +2,8 @@ services:
   backend:
     image: sgwar/gsc-portal-backend:latest
     container_name: gsc_backend
+    env_file:
+      - .env
     volumes:
       - ./uploads:/app/uploads
     ports:
