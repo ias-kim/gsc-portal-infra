@@ -19,6 +19,7 @@ services:
       - REDIS_USER=${REDIS_USER}      
       - REDIS_PASSWORD=${REDIS_PASSWORD} 
       - JWT_SECRET=${JWT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
     depends_on:
       - db
     networks:
