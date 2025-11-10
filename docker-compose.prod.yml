@@ -23,13 +23,14 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - SESSION_SECRET=${SESSION_SECRET}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - gsc
     restart: always
 
   db:
-    image: mysql:8
+    image: mysql:8.0
     container_name: gsc_db
     env_file:
       - .env
