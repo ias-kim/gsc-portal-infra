@@ -3,7 +3,7 @@ services:
     image: sgwar/gsc-portal-backend:latest
     container_name: gsc_backend
     env_file:
-      - .env.production
+      - .env
     volumes:
       - ./uploads:/app/uploads
     ports:
@@ -33,7 +33,7 @@ services:
     image: mysql:8.0
     container_name: gsc_db
     env_file:
-      - .env.production
+      - .env
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
