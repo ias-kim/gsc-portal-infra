@@ -60,8 +60,6 @@ services:
   frontend:
     image: sgwar/gsc-portal-frontend:latest
     container_name: gsc_frontend
-    env_file:
-      - .env
     ports:
       - "8080:80"   # 외부 8080 -> 내부 80
     volumes:
