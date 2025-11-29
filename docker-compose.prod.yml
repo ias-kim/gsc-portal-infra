@@ -50,7 +50,7 @@ services:
       - MYSQL_COLLATION=utf8mb4_unicode_ci
     volumes:
       - db_data:/var/lib/mysql
-      - ./sql/init:/docker-entrypoint-initdb.d
+      - ./sql:/docker-entrypoint-initdb.d
       - ./mysql/conf.d:/etc/mysql/conf.d
     ports: 
       - "3306:3306"
