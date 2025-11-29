@@ -2,6 +2,7 @@ CREATE OR REPLACE VIEW v_notice_list AS
 SELECT
     -- 1. 기본 공지 정보
     n.notice_id,
+    n.sec_id,
     n.title,
     n.content,
     n.is_pinned,
@@ -15,7 +16,7 @@ SELECT
          WHEN c.is_special = 2 THEN 'korean'
          WHEN c.is_special = 1 THEN 'special'
          ELSE 'regular'
-        END) AS course_type,
+        END) COLLATE utf8mb4_general_ci AS course_type,
 
     -- 3. 첨부파일 개수 (별도 서브쿼리에서 계산)
     COALESCE(a.attach_count, 0) AS attach_count,
